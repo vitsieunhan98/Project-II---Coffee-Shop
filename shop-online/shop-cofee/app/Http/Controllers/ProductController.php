@@ -59,7 +59,18 @@ class ProductController extends Controller
         //Lấy tất cả repcomment
         $repComment = ReplyComment::getAll();
 
-        return view('chi-tiet', compact('product', 'cmts', 'repComment'));
+        $products = Product::getAll();
+        $sale_products = array();
+
+        foreach ($products as $item) {
+            if($item->price !== $item->promotion_price){
+                array_push($sale_products, $item);
+            }
+        }
+
+        $count_sale = count($sale_products);
+
+        return view('chi-tiet', compact('product', 'cmts', 'repComment', 'sale_products'));
     }
 
 

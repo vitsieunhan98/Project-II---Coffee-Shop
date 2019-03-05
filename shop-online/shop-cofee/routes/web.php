@@ -55,8 +55,8 @@ Route::get('dang-xuat', [
     'uses'=>'UserController@logout'
 ]);
 
-Route::post('rate-product/{id}', [
-   'as'=>'rate',
+Route::post('rate-product/{id_user}/{id_product}', [
+   'as'=>'rate-product',
    'uses'=>'UserController@rateProduct'
 ]);
 

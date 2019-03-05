@@ -27,15 +27,29 @@
 
                             <p>Đánh giá</p>
                             <div class="single-item-options">
-                                <form action="" method="post">
-                                    <select class="wc-select" name="rate">
-                                        <option disabled>Điểm</option>
-                                        @for($i=1; $i<=10; $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                    <button class="beta-btn-large" type="submit">Đánh giá</button>
-                                </form>
+                                @if(Auth::check())
+                                    <form action="{{route('rate-product', Auth::id, $product->id)}}" method="post">
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                        <select class="wc-select" name="rate">
+                                            <option disabled>Điểm</option>
+                                            @for($i=1; $i<=10; $i++)
+                                                <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
+                                        </select>
+                                        <button class="beta-btn-large" type="submit">Đánh giá</button>
+                                    </form>
+                                @else
+                                    <form action="{{route('an-dang-nhap')}}" method="post">
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                        <select class="wc-select" name="rate">
+                                            <option disabled>Điểm</option>
+                                            @for($i=1; $i<=10; $i++)
+                                                <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
+                                        </select>
+                                        <button class="beta-btn-large" type="submit">Đánh giá</button>
+                                    </form>
+                                @endif
                                 <a class="add-to-cart" href="#"><i class="fa fa-shopping-cart"></i></a>
                                 <div class="clearfix"></div>
                             </div>
@@ -55,6 +69,7 @@
                         <div class="panel" id="tab-reviews">
                             <p>No Reviews</p>
                         </div>
+
                     </div>
                     <div class="space50">&nbsp;</div>
                 </div>
@@ -79,15 +94,15 @@
                         <h3 class="widget-title">Sale Products</h3>
                         <div class="widget-body">
                             <div class="beta-sales beta-lists">
-                                {{--@foreach($sale_products as $one)--}}
-                                    {{--<div class="media beta-sales-item">--}}
-                                        {{--<a class="pull-left" href="{{route('chi-tiet', $one->id)}}"><img src="{{$one->image}}" alt=""></a>--}}
-                                        {{--<div class="media-body">--}}
-                                            {{--{{$one->name}}--}}
-                                            {{--<span class="beta-sales-price">{{number_format($one->promotion_price)}}</span>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--@endforeach--}}
+                                @foreach($sale_products as $one)
+                                    <div class="media beta-sales-item">
+                                        <a class="pull-left" href="{{route('chi-tiet', $one->id)}}"><img src="{{$one->image}}" alt=""></a>
+                                        <div class="media-body">
+                                            {{$one->name}}
+                                            <span class="beta-sales-price">{{number_format($one->promotion_price)}}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div> <!-- best sellers widget -->

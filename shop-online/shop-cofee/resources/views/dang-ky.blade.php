@@ -5,36 +5,6 @@
     <div id="content">
         <form action="{{route('dang-ky')}}" method="post" class="beta-form-checkout">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <script>
-                var success = '{{Session::has('signup-success')}}';
-                var check = '{{count($errors) > 0}}';
-                var errors = [
-                    @foreach($errors->all() as $err)
-                        '{{$err}}',
-                    @endforeach
-                ];
-
-                var notice = '';
-
-                for (var i=0; i<errors.length; i++){
-                    notice += errors[i] + '\n';
-                }
-
-                if(success){
-                    $.notify('{{Session::get('signup-success')}}',
-                        {
-                            position: "right bottom"
-                        }
-                    );
-                }
-                else if(check){
-                    $.notify(notice,
-                        {
-                            position: "right bottom"
-                        }
-                    );
-                }
-            </script>
             <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">

@@ -28,21 +28,6 @@ class AppServiceProvider extends ServiceProvider
            $view->with('types', $types);
         });
 
-//        view()->composer('chi-tet', function ($view){
-//            $products = Product::getAll();
-//            $sale_products = array();
-//
-//            foreach ($products as $item) {
-//                if($item->price !== $item->promotion_price){
-//                    array_push($sale_products, $item);
-//                }
-//            }
-//
-//            $count_sale = count($sale_products);
-//
-//            $view->with(['sale_products'=>$sale_products, 'count_sale'=>$count_sale]);
-//        });
-
 //        view()->composer('header', function($view){
 //            if(Session('cart')){
 //                $oldCart = Session::get('cart');

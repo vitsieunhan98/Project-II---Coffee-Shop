@@ -8,6 +8,7 @@ use App\Comment;
 use App\Product;
 use App\ReplyComment;
 use App\User;
+use App\UserRate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +16,38 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //ĐÁNH GIÁ SẢN PHẨM (Rate)
-    public function rateProduct($id, Request $request){
-        $product = Product::where('id', $id)->first();
-        $product->total_rate += 1;
-        $product->rate = ($request->rate + $product->rate)/$product->total_rate;
+    public function rateProduct($id_user, $id_product, Request $request){
+        $rProduct = UserRate::where('id_product', $id_product)->get();
+        $check = false;
 
-        $product->save();
+        foreach ($rProduct as $one){
+            if($one->id_user === $id_user){
+                $check = true;
+                break;
+            }
+        }
+
+        $product = Product::where('id', $id_product)->first();
+
+        if($check === false){
+
+            $product->total_rate += 1;
+            $product->rate = ($request->rate + $product->rate)/$product->total_rate;
+
+            $product->save();
+
+            $new_rate = new UserRate();
+            $new_rate->id_user = $id_user;
+            $new_rate->id_product = $id_product;
+            $new_rate->rate = $request->rate;
+        }
+        else{
+            $rate = UserRate::where('id_user', $id_user)->where('id_product', $id_product)->first();
+            $product->rate = ($product->rate - $rate->rate + $request->rate)/$product->total_rate;
+            $product->save();
+            $rate->rate = $request->rate;
+            $rate->save();
+        }
 
         return redirect()->back();
     }
