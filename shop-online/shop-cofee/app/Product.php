@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property ProductType $productType
  * @property BillDetail[] $billDetails
  * @property Comment[] $comments
+ * @property UserRate[] $userRates
  */
 class Product extends Model
 {
@@ -55,6 +56,14 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany('App\Comment', 'id_product');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userRates()
+    {
+        return $this->hasMany('App\UserRate', 'id_product');
     }
 
     public static function getDrinks(){

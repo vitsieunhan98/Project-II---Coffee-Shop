@@ -17,6 +17,7 @@ use Illuminate\Auth\Authenticatable as AuthenticableTrait;
  * @property Bill[] $bills
  * @property Comment[] $comments
  * @property ReplyComment[] $replyComments
+ * @property UserRate[] $userRates
  */
 class User extends \Eloquent implements Authenticatable
 {
@@ -33,7 +34,7 @@ class User extends \Eloquent implements Authenticatable
      */
     public function role()
     {
-        return $this->belongsTo('App\Role', 'id_role', 'id');
+        return $this->belongsTo('App\Role', 'id_role');
     }
 
     /**
@@ -58,6 +59,14 @@ class User extends \Eloquent implements Authenticatable
     public function replyComments()
     {
         return $this->hasMany('App\ReplyComment', 'id_user');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userRates()
+    {
+        return $this->hasMany('App\UserRate', 'id_user');
     }
 
     public static function getAll(){

@@ -12,7 +12,7 @@
       <paths name="coffee-shop">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="shop-online/shop-cofee" />
+            <mapping local="$PROJECT_DIR$" web="Project-II---Coffee-Shop/shop-online/shop-cofee" />
           </mappings>
         </serverdata>
       </paths>
