@@ -42,19 +42,29 @@
                                         <div class="single-item-body">
                                             <p class="single-item-title">{{$one->name}}</p>
                                             <p class="single-item-price">
-                                                <span>{{number_format($one->price)}} đồng</span>
+                                            <p class="single-item-price">
+                                                @if($one->price != $one->promotion_price)
+                                                    <span class="flash-del">{{$one->price}}</span>
+                                                    <span class="flash-sale">{{$one->promotion_price}}</span>
+                                                @else
+                                                    <span>{{number_format($one->price)}} đồng</span>
+                                                @endif
+                                            </p>
                                             </p>
                                             &nbsp;
                                             <p>{{$one->total_rate}} lượt đánh giá: {{$one->rate}} điểm</p>
                                         </div>
                                         <div class="single-item-caption">
-                                            <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+                                            @if(Auth::check())
+                                                <a class="add-to-cart pull-left" href="{{route('add-to-cart', $one->id)}}"><i class="fa fa-shopping-cart"></i></a>
+                                            @else
+                                                <a class="add-to-cart pull-left" href="{{route('an-dang-nhap')}}"><i class="fa fa-shopping-cart"></i></a>
+                                            @endif
                                             <a class="beta-btn primary" href="{{route('chi-tiet', $one->id)}}">Chi tiết<i class="fa fa-chevron-right"></i></a>
                                             <div class="clearfix"></div>
                                         </div>
                                     </div>
                                 </div>
-
                             @endforeach
 
                         </div>

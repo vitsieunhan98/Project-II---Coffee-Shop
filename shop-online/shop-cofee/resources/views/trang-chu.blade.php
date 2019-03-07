@@ -44,11 +44,20 @@
                                         <div class="single-item-body">
                                             <p class="single-item-title">{{$one->name}}</p>
                                             <p class="single-item-price">
-                                                <span>{{$one->promotion_price}}</span>
+                                                @if($one->price != $one->promotion_price)
+                                                    <span class="flash-del">{{number_format($one->price)}} đồng</span>
+                                                    <span class="flash-sale">{{number_format($one->promotion_price)}} đồng</span>
+                                                @else
+                                                    <span>{{$one->price}}</span>
+                                                @endif
                                             </p>
                                         </div>
                                         <div class="single-item-caption">
-                                            <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+                                            @if(Auth::check())
+                                                <a class="add-to-cart pull-left" href="{{route('add-to-cart', $one->id)}}"><i class="fa fa-shopping-cart"></i></a>
+                                            @else
+                                                <a class="add-to-cart pull-left" href="{{route('an-dang-nhap')}}"><i class="fa fa-shopping-cart"></i></a>
+                                            @endif
                                             <a class="beta-btn primary" href="{{route('chi-tiet', $one->id)}}">Chi tiết<i class="fa fa-chevron-right"></i></a>
                                             <div class="clearfix"></div>
                                         </div>
@@ -67,24 +76,36 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
-                                <div class="single-item">
-                                    <div class="single-item-header">
-                                        <a href="product.html"><img src="assets/dest/images/products/1.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single-item-body">
-                                        <p class="single-item-title">Sample Woman Top</p>
-                                        <p class="single-item-price">
-                                            <span>$34.55</span>
-                                        </p>
-                                    </div>
-                                    <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                        <div class="clearfix"></div>
+                            @foreach($top_products as $one)
+                                <div class="col-sm-3">
+                                    <div class="single-item">
+                                        <div class="single-item-header">
+                                            <a href="{{route('chi-tiet', $one->id)}}"><img src="{{$one->image}}" alt=""></a>
+                                        </div>
+                                        <div class="single-item-body">
+                                            <p class="single-item-title">{{$one->name}}</p>
+                                            <p class="single-item-price">
+                                                @if($one->price != $one->promotion_price)
+                                                    <span class="flash-del">{{number_format($one->price)}} đồng</span>
+                                                    <span class="flash-sale">{{number_format($one->promotion_price)}} đồng</span>
+                                                @else
+                                                    <span>{{number_format($one->price)}} đồng</span>
+                                                @endif
+                                            </p>&nbsp;
+                                            <p>{{$one->total_rate}} lượt đánh giá: {{$one->rate}} điểm</p>
+                                        </div>
+                                        <div class="single-item-caption">
+                                            @if(Auth::check())
+                                                <a class="add-to-cart pull-left" href="{{route('add-to-cart', $one->id)}}"><i class="fa fa-shopping-cart"></i></a>
+                                            @else
+                                                <a class="add-to-cart pull-left" href="{{route('an-dang-nhap')}}"><i class="fa fa-shopping-cart"></i></a>
+                                            @endif
+                                            <a class="beta-btn primary" href="{{route('chi-tiet', $one->id)}}">Chi tiết<i class="fa fa-chevron-right"></i></a>
+                                            <div class="clearfix"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
 
                     </div> <!-- END TOP PRODUCTS -->

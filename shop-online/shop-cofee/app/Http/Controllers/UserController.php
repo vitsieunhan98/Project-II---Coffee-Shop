@@ -16,46 +16,50 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //ĐÁNH GIÁ SẢN PHẨM (Rate)
-    public function rateProduct($id_user, $id_product, Request $request){
-        $rProduct = UserRate::where('id_product', $id_product)->get();
-        $check = false;
-
-        foreach ($rProduct as $one){
-            if($one->id_user === $id_user){
-                $check = true;
-                break;
-            }
-        }
-
-        $product = Product::where('id', $id_product)->first();
-
-        if($check === false){
-
-            $product->total_rate += 1;
-            $product->rate = ($request->rate + $product->rate)/$product->total_rate;
-
-            $product->save();
-
-            $new_rate = new UserRate();
-            $new_rate->id_user = $id_user;
-            $new_rate->id_product = $id_product;
-            $new_rate->rate = $request->rate;
-        }
+    public function rateProduct($id_product, Request $request){
+        if(!Auth::check()) return redirect()->route('an-dang-nhap');
         else{
-            $rate = UserRate::where('id_user', $id_user)->where('id_product', $id_product)->first();
-            $product->rate = ($product->rate - $rate->rate + $request->rate)/$product->total_rate;
-            $product->save();
-            $rate->rate = $request->rate;
-            $rate->save();
+            $rProduct = UserRate::where('id_product', $id_product)->get();
+            $check = false;
+
+            foreach ($rProduct as $one){
+                if($one->id_user === Auth::id()){
+                    $check = true;
+                    break;
+                }
+            }
+
+            $product = Product::where('id', $id_product)->first();
+
+            if($check === false){
+
+                $product->total_rate += 1;
+                $product->rate = ($request->rate + $product->rate)/$product->total_rate;
+
+                $product->save();
+
+                $new_rate = new UserRate();
+                $new_rate->id_user = Auth::id();
+                $new_rate->id_product = $id_product;
+                $new_rate->rate = $request->rate;
+            }
+            else{
+                $rate = UserRate::where('id_user', Auth::id())->where('id_product', $id_product)->first();
+                $product->rate = ($product->rate - $rate->rate + $request->rate)/$product->total_rate;
+                $product->save();
+                $rate->rate = $request->rate;
+                $rate->save();
+            }
+
+            return redirect()->back();
         }
 
-        return redirect()->back();
     }
 
     //User click vào XEM THÔNG TIN CÁ NHÂN
-    public function viewProfile($id_user){
-        $user = User::find($id_user);
-        $bill = Bill::where('id_user', $id_user)->get();
+    public function viewProfile(){
+        $user = User::find(Auth::id());
+        $bill = Bill::where('id_user', Auth::id())->get();
         $bill_detail = array();
 
         foreach ($bill as $item) {
@@ -71,11 +75,19 @@ class UserController extends Controller
         return view('dat-hang');
     }
 
-    public function postOrder($id_user, Request $request){
+    public function postOrder(Request $request){
+        $this->validate($request,
+            [
+                'address'=>'required'
+            ],
+            [
+                'address.required'=>'Yêu cầu nhập địa chỉ giao hàng'
+            ]
+        );
         $cart = Session::get('cart');
 
         $bill = new Bill();
-        $bill->id_user = $id_user;
+        $bill->id_user = Auth::id();
         $bill->date_order = date('d-m-Y');
         $bill->total = $cart->totalPrice;
         $bill->note = $request->note;
@@ -99,8 +111,8 @@ class UserController extends Controller
     }
 
     //SỬA THÔNG TIN CÁ NHÂN (Manage Account)
-    public function editProfile($id, Request $request){
-        $user = User::where('id', $id)->first();
+    public function editProfile(Request $request){
+        $user = User::where('id', Auth::id())->first();
         $id_role = ($request->role === 'Admin') ? 1:2;
         $this->validate($request,
             [
@@ -130,10 +142,10 @@ class UserController extends Controller
     }
 
     //COMMENT VÀO 1 SẢN PHẨM
-    public function postComment($id_product, $id_user, Request $request){
+    public function postComment($id_product, Request $request){
         $comment = new Comment();
         $comment->content = $request->Content;
-        $comment->id_user = $id_user;
+        $comment->id_user = Auth::id();
         $comment->id_product = $id_product;
 
         $comment->save();
@@ -142,10 +154,10 @@ class UserController extends Controller
     }
 
     //REPLY MỘT COMMENT
-    public function postRepComment($id_comment, $id_user, Request $request){
+    public function postRepComment($id_comment, Request $request){
         $repComment = new ReplyComment();
         $repComment->id_comment = $id_comment;
-        $repComment->id_user = $id_user;
+        $repComment->id_user = Auth::id();
         $repComment->content = $request->rep_content;
 
         $repComment->save();

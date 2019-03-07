@@ -25,7 +25,7 @@ Route::get('loai-san-pham/{id}', [
    'uses'=>'ProductController@getType'
 ]);
 
-Route::get('chi-tiet/{id}', [
+Route::get('chi-tiet/{id_product}', [
    'as'=>'chi-tiet',
     'uses'=>'ProductController@getDetailsProduct'
 ]);
@@ -55,29 +55,39 @@ Route::get('dang-xuat', [
     'uses'=>'UserController@logout'
 ]);
 
-Route::post('rate-product/{id_user}/{id_product}', [
+Route::post('rate-product/{id_product}', [
    'as'=>'rate-product',
    'uses'=>'UserController@rateProduct'
 ]);
 
-Route::get('view-profile/{id_user}', [
+Route::get('view-profile', [
    'as'=>'view-profile',
    'uses'=>'UserController@viewProfile'
 ]);
 
-Route::post('post-cmt/{id_user}/{id_product}', [
+Route::post('post-cmt/{id_product}', [
    'as'=>'post-cmt',
    'uses'=>'UserController@postComment'
 ]);
 
-Route::post('post-rep-cmt/{id_user}/{id_comment}', [
+Route::post('post-rep-cmt/{id_comment}', [
     'as'=>'post-rep-cmt',
     'uses'=>'UserController@postRepComment'
 ]);
 
-Route::post('edit-profile/{id}', [
+Route::post('edit-profile', [
    'as'=>'edit-profile',
    'uses'=>'UserController@editProfile'
+]);
+
+Route::get('an-dat-hang', [
+   'as'=>'an-dat-hang',
+   'uses'=>'UserController@getOrder'
+]);
+
+Route::post('dat-hang', [
+   'as'=>'dat-hang',
+   'uses'=>'UserController@postOrder'
 ]);
 
 Route::get('xem-product', [
@@ -133,4 +143,14 @@ Route::post('lock/{id_user}', [
 Route::post('unlock/{id_user}', [
     'as'=>'unlock',
     'uses'=>'AdminController@unlockUser'
+]);
+
+Route::get('add-to-cart/{id}', [
+   'as'=>'add-to-cart',
+   'uses'=>'CartController@getAddToCart'
+]);
+
+Route::get('del-item-cart/{id}', [
+   'as'=>'del-item-cart',
+   'uses'=>'CartController@getDelItemCart'
 ]);

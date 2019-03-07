@@ -2,7 +2,13 @@
 @section('content')
 <div class="container">
     <div id="content">
-
+        @if(Session::has('login-fail'))
+            {{Session::get('login-fail')}}
+        @elseif(count($errors) > 0)
+            @foreach($errors->all() as $err)
+                {{$err}}
+            @endforeach
+        @endif
         <form action="{{route('dang-nhap')}}" method="post" class="beta-form-checkout">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="row">
