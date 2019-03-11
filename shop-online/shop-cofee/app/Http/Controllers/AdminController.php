@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bill;
 use App\BillDetail;
 use App\Product;
+use App\ProductType;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -12,10 +13,9 @@ class AdminController extends Controller
 {
     //QUẢN LÝ CÁC SẢN PHẨM (KHI ADMIN ĐĂNG NHẬP)
     public function getProductView(){
-        $foods = Product::getFoods();
-        $drinks = Product::getDrinks();
-
-        return view('admin-product', compact('foods', 'drinks'));
+        $products = Product::all();
+        $types = ProductType::all();
+        return view('admin-product', compact('products', 'types'));
     }
 
     //THÊM SẢN PHẨM
@@ -96,7 +96,24 @@ class AdminController extends Controller
     public function getBillView(){
         $bills = Bill::orderBy('id', 'desc')->get();
 
-        return view('admin-order', compact('bills'));
+        $users = array();
+        foreach ($bills as $bill){
+            array_push($users, User::find($bill->id_user));
+        }
+
+        $bills_detail = array();
+        $products_bill = array();
+        foreach ($bills as $bill){
+            $details = BillDetail::where('id_bill', $bill->id)->get();
+            array_push($bills_detail, $details);
+            $one = array();
+            foreach ($details as $item){
+                array_push($one, Product::find($item->id_product));
+            }
+            array_push($products_bill, $one);
+        }
+
+        return view('admin-order', compact('bills', 'users', 'bills_detail', 'products_bill'));
     }
 
     //Xác nhận đơn hàng

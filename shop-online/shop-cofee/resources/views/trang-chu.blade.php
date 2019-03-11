@@ -72,7 +72,7 @@
                     <div class="beta-products-list">
                         <h4>Top Products</h4>
                         <div class="beta-products-details">
-                            <p class="pull-left">438 styles found</p>
+                            <p class="pull-left"></p>
                             <div class="clearfix"></div>
                         </div>
                         <div class="row">

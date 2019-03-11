@@ -18,7 +18,7 @@
 
                     <div class="form-block">
                         <label for="your_first_name">Ghi chú</label>
-                        <input type="text" id="your_first_name" name="note" required>
+                        <input type="text" id="your_first_name" name="note">
                     </div>
 
                     <div class="form-block">
@@ -30,10 +30,10 @@
                 <div class="col-sm-6">
                     <div class="your-order">
                         <div class="your-order-head"><h5>Đơn hàng của bạn</h5></div>
-                        <div class="your-order-body">
-                            <div class="your-order-item">
-                                <div>
-                                    @if(Session('cart'))
+                        @if(Session('cart'))
+                            <div class="your-order-body">
+                                <div class="your-order-item">
+                                    <div>
                                         @foreach($product_cart as  $product)
                                             <!--  one item	 -->
                                             <div class="media">
@@ -46,17 +46,16 @@
                                             </div>
                                             <!-- end one item -->
                                         @endforeach
-                                    @endif
+                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="clearfix"></div>
+                                <div class="your-order-item">
+                                    <div class="pull-left"><h3 class="your-order-f18 color-black">Tổng tiền:</h3></div>
+                                    <div class="pull-right"><h3 class="color-black">{{number_format(Session('cart')->totalPrice)}} đồng</h3></div>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
-                            <div class="your-order-item">
-                                <div class="pull-left"><p class="your-order-f18">Total:</p></div>
-                                <div class="pull-right"><h5 class="color-black">{{number_format(Session('cart')->totalPrice)}} đồng</h5></div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-
+                        @endif
                     </div> <!-- .your-order -->
                 </div>
             </div>

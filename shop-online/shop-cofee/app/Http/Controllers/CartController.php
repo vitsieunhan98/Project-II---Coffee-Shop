@@ -22,7 +22,7 @@ class CartController extends Controller
     public function getDelItemCart($id){
         $oldCart = Session::has('cart')?Session::get('cart'):null;
         $cart = new Cart($oldCart);
-        $cart->removeItem($id);
+        $cart->removeOne($id);
         if(count($cart->items) > 0){
             Session::put('cart', $cart);
         }

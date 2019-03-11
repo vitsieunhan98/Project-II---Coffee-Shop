@@ -23,7 +23,7 @@ class UserController extends Controller
             $check = false;
 
             foreach ($rProduct as $one){
-                if($one->id_user === Auth::id()){
+                if($one->id_user == Auth::id()){
                     $check = true;
                     break;
                 }
@@ -31,8 +31,7 @@ class UserController extends Controller
 
             $product = Product::where('id', $id_product)->first();
 
-            if($check === false){
-
+            if(!$check){
                 $product->total_rate += 1;
                 $product->rate = ($request->rate + $product->rate)/$product->total_rate;
 
@@ -42,13 +41,14 @@ class UserController extends Controller
                 $new_rate->id_user = Auth::id();
                 $new_rate->id_product = $id_product;
                 $new_rate->rate = $request->rate;
+                $new_rate->save();
             }
             else{
                 $rate = UserRate::where('id_user', Auth::id())->where('id_product', $id_product)->first();
                 $product->rate = ($product->rate - $rate->rate + $request->rate)/$product->total_rate;
                 $product->save();
                 $rate->rate = $request->rate;
-                $rate->save();
+                UserRate::where('id_user', Auth::id())->where('id_product', $id_product)->update(['rate'=>$request->rate]);
             }
 
             return redirect()->back();
@@ -85,17 +85,22 @@ class UserController extends Controller
             ]
         );
         $cart = Session::get('cart');
-
         $bill = new Bill();
         $bill->id_user = Auth::id();
-        $bill->date_order = date('d-m-Y');
+        $bill->date_order = date('Y-m-d');
         $bill->total = $cart->totalPrice;
-        $bill->note = $request->note;
+        if($request->note != null){
+            $bill->note = $request->note;
+        }
+        else{
+            $bill->note = 'Không có';
+        }
+
         $bill->address = $request->address;
         $bill->status = false;
         $bill->save();
 
-        foreach ($cart['items'] as $key => $value){
+        foreach ($cart->items as $key => $value){
             $bill_detail = new BillDetail();
 
             $bill_detail->id_bill = $bill->id;

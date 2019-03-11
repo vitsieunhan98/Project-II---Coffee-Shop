@@ -112,10 +112,10 @@ Route::post('delete-product/{id_product}', [
 
 Route::get('xem-don-hang', [
    'as'=>'xem-don-hang',
-   'uses'=>'AdminControlelr@getBillView'
+   'uses'=>'AdminController@getBillView'
 ]);
 
-Route::post('duyet-don-hang/{id_bill}', [
+Route::get('duyet-don-hang/{id_bill}', [
    'as'=>'duyet-don-hang',
    'uses'=>'AdminController@confirmOrder'
 ]);
@@ -135,12 +135,12 @@ Route::post('nang-quyen/{id_user}', [
     'uses'=>'AdminController@upgradeRole'
 ]);
 
-Route::post('lock/{id_user}', [
+Route::get('lock/{id_user}', [
    'as'=>'lock',
    'uses'=>'AdminController@lockUser'
 ]);
 
-Route::post('unlock/{id_user}', [
+Route::get('unlock/{id_user}', [
     'as'=>'unlock',
     'uses'=>'AdminController@unlockUser'
 ]);

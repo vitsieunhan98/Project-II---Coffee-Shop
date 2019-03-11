@@ -91,7 +91,7 @@
 
                                     <!-- INPUT REPLY COMMENT-->
                                     <div class="form-group">
-                                        <form action="{{route('post-rep-cmt', $cmt->id)}}" method="post">
+                                        <form action="@if(Auth::check()){{route('post-rep-cmt', $cmt->id)}} @else {{route('an-dang-nhap')}} @endif" method="@if(Auth::check())post @else get  @endif">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <label class="col-sm-3 control-label">Tôi</label>
                                             <div class="col-sm-9">
@@ -105,7 +105,7 @@
                             @endforeach
                             <!-- INPUT COMMENT-->
                             <div class="form-group">
-                                <form action="{{route('post-cmt', $product->id)}}" method="post">
+                                <form action="@if(Auth::check()){{route('post-cmt', $product->id)}} @else {{route('an-dang-nhap')}} @endif" method="@if(Auth::check())post @else get  @endif">
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <label for="comment">Comment:</label>
                                     <textarea class="form-control" rows="4" id="comment" name="Content" required></textarea>

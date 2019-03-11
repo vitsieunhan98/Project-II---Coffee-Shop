@@ -41,7 +41,7 @@ class GuestController extends Controller
         if($user->status){
             if(Auth::attempt($data)){
                 if($this->isAdmin($data['email'])){
-                    return redirect()->route('admin-product');
+                    return redirect()->route('xem-product');
                 }
                 return redirect()->route('trang-chu');
             }
