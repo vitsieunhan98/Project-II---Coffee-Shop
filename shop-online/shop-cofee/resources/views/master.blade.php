@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
     <link rel="stylesheet" href="assets/dest/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/dest/vendors/colorbox/example3/colorbox.css">
     <link rel="stylesheet" href="assets/dest/rs-plugin/css/settings.css">
@@ -27,6 +28,13 @@
 </div> <!-- .container -->
 
 @include('footer')
+
+<div class="copyright">
+    <div class="container">
+        <p class="pull-left">Privacy policy. (&copy;) 2019</p>
+        <div class="clearfix"></div>
+    </div> <!-- .container -->
+</div> <!-- .copyright -->
 
 <!-- include js files -->
 <script src="assets/dest/js/jquery.js"></script>

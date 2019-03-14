@@ -31,7 +31,7 @@
             <div class="pull-right beta-components space-left ov">
                 <div class="space10">&nbsp;</div>
                 <div class="beta-comp">
-                        <input type="search" class="form-control" value="" id="productSearch" placeholder="Nhập từ khóa..." style="width: 183px"/>
+                        <input type="search" class="form-control" value="" id="productSearch" placeholder="Nhập tên sản phẩm cần tìm..." style="width: 250px"/>
                 </div>
 
                 <div class="beta-comp">
@@ -42,7 +42,6 @@
                                 <div class="beta-dropdown cart-body" style="width: 400px">
 
                                     <!-- CART ITEM-->
-
                                         @foreach($product_cart as $product)
                                             <div class="cart-item">
                                                 <a class="cart-item-delete" href="{{route('del-item-cart', $product['item']['id'])}}"><i class="fa fa-times"></i></a>
@@ -57,7 +56,7 @@
                                         @endforeach
 
                                     <div class="cart-caption">
-                                        <div class="cart-total text-right">Tổng tiền: <span class="cart-total-value">{{number_format($totalPrice)}} đồng</span></div>
+                                        <div class="cart-total text-right">Tổng tiền: <span class="cart-total-value">{{number_format(Session::get('cart')->totalPrice)}} đồng</span></div>
                                         <div class="clearfix"></div>
 
                                         <div class="center">
@@ -90,7 +89,6 @@
 
                         </ul>
                     </li>
-                    <li><a href="contacts.html">Liên hệ</a></li>
                 </ul>
                 <div class="clearfix"></div>
             </nav>

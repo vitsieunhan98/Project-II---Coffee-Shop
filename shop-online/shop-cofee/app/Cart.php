@@ -17,17 +17,17 @@ class Cart{
     }
 
     public function add($item, $id){
-        $cart = ['qty' => 0, 'price' => $item->price, 'item' => $item];
+        $cart = ['qty' => 0, 'price' => $item->promotion_price, 'item' => $item];
         if($this->items){
             if(array_key_exists($id, $this->items)){
                 $cart = $this->items[$id];
             }
         }
         $cart['qty']++;
-        $cart['price'] = $item->price * $cart['qty'];
+        $cart['price'] = $item->promotion_price * $cart['qty'];
         $this->items[$id] = $cart;
         $this->totalQty++;
-        $this->totalPrice += $item->price;
+        $this->totalPrice += $item->promotion_price;
     }
 
     //Xóa 1

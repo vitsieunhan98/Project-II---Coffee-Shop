@@ -90,29 +90,49 @@
                                     @endforeach
 
                                     <!-- INPUT REPLY COMMENT-->
-                                    <div class="form-group">
-                                        <form action="@if(Auth::check()){{route('post-rep-cmt', $cmt->id)}} @else {{route('an-dang-nhap')}} @endif" method="@if(Auth::check())post @else get  @endif">
-                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                            <label class="col-sm-3 control-label">Tôi</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" rows="1" type="text" name="rep_content" required>
-                                            </div>
-                                            <button class="btn" type="submit" style="margin-left: 747px">Post</button>
-                                        </form>
-                                    </div>
-
+                                    @if(Auth::check())
+                                        <div class="form-group">
+                                            <form action="{{route('post-rep-cmt', $cmt->id)}}" method="post">
+                                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                <label class="col-sm-3 control-label">Tôi</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" rows="1" type="text" name="rep_content" required>
+                                                </div>
+                                                <button class="btn" type="submit" style="margin-left: 747px">Post</button>
+                                            </form>
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <form action="{{route('an-dang-nhap')}}" method="get">
+                                                <label class="col-sm-3 control-label">Tôi</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" rows="1" type="text" name="rep_content" required>
+                                                </div>
+                                                <button class="btn" type="submit" style="margin-left: 747px">Post</button>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                             <!-- INPUT COMMENT-->
-                            <div class="form-group">
-                                <form action="@if(Auth::check()){{route('post-cmt', $product->id)}} @else {{route('an-dang-nhap')}} @endif" method="@if(Auth::check())post @else get  @endif">
-                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                    <label for="comment">Comment:</label>
-                                    <textarea class="form-control" rows="4" id="comment" name="Content" required></textarea>
-                                    <button class="btn" type="submit" style="margin-left: 732px">Post</button>
-                                </form>
-                            </div>
-
+                            @if(Auth::check())
+                                <div class="form-group">
+                                    <form action="{{route('post-cmt', $product->id)}}" method="post">
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                        <label for="comment">Comment:</label>
+                                        <textarea class="form-control" rows="4" id="comment" name="Content" required></textarea>
+                                        <button class="btn" type="submit" style="margin-left: 732px">Post</button>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="form-group">
+                                    <form action="{{route('an-dang-nhap')}}" method="get">
+                                        <label for="comment">Comment:</label>
+                                        <textarea class="form-control" rows="4" id="comment" name="Content" required></textarea>
+                                        <button class="btn" type="submit" style="margin-left: 732px">Post</button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
 
                     </div>

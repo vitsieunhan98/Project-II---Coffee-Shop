@@ -44,8 +44,8 @@
                                             <p class="single-item-price">
                                             <p class="single-item-price">
                                                 @if($one->price != $one->promotion_price)
-                                                    <span class="flash-del">{{$one->price}}</span>
-                                                    <span class="flash-sale">{{$one->promotion_price}}</span>
+                                                    <span class="flash-del">{{number_format($one->price)}} đồng</span>
+                                                    <span class="flash-sale">{{number_format($one->promotion_price)}} đồng</span>
                                                 @else
                                                     <span>{{number_format($one->price)}} đồng</span>
                                                 @endif

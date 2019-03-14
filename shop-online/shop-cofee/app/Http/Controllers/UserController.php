@@ -10,6 +10,7 @@ use App\ReplyComment;
 use App\User;
 use App\UserRate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,21 +54,25 @@ class UserController extends Controller
 
             return redirect()->back();
         }
-
     }
 
     //User click vào XEM THÔNG TIN CÁ NHÂN
     public function viewProfile(){
         $user = User::find(Auth::id());
-        $bill = Bill::where('id_user', Auth::id())->get();
+        $bills = Bill::where('id_user', Auth::id())->get();
         $bill_detail = array();
-
-        foreach ($bill as $item) {
+        $products_bill = array();
+        foreach ($bills as $item) {
             $detail = BillDetail::where('id_bill', $item->id)->get();
             array_push($bill_detail, $detail);
+            $one = array();
+            foreach ($detail as $item){
+                array_push($one, Product::find($item->id_product));
+            }
+            array_push($products_bill, $one);
         }
 
-        return view('thong-tin-ca-nhan', compact('user', 'bill_detail', 'bill'));
+        return view('thong-tin-ca-nhan', compact('user', 'bill_detail', 'bills', 'products_bill'));
     }
 
     //ĐẶT HÀNG
@@ -118,7 +123,6 @@ class UserController extends Controller
     //SỬA THÔNG TIN CÁ NHÂN (Manage Account)
     public function editProfile(Request $request){
         $user = User::where('id', Auth::id())->first();
-        $id_role = ($request->role === 'Admin') ? 1:2;
         $this->validate($request,
             [
                 'password'=>'required|min:6',
@@ -137,10 +141,8 @@ class UserController extends Controller
         if($user->password != $request->password){
             $user->password = Hash::make($request->password);
         }
-        $user->email = $request->email;
         $user->name = $request->name;
         $user->phone = $request->phone;
-        $user->id_role = $id_role;
 
         $user->save();
         return redirect()->back()->with('edit-profile-success', 'Thay đổi thông tin thành công');

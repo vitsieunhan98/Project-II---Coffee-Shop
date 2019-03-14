@@ -77,72 +77,79 @@
                 </td>
 
             </tr>
-            <div id="{{'product'.$product->id}}" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Chỉnh sửa thông tin sản phẩm</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" method="post" action="{{route('edit-product', $product->id)}}">
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Tên sản phẩm</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="name" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3" class="col-sm-2 control-label">Loại</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" name="id_type">
-                                            @foreach($types as $type)
-                                                <option value="{{$type->id}}">{{$type->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3" class="col-sm-2 control-label">Giá</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="price" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3" class="col-sm-2 control-label">Mô tả</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="description">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3" class="col-sm-2 control-label">Giá sau khuyến mãi</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="promotion_price" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3" class="col-sm-2 control-label">Ảnh</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="image" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3" class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-10">
-                                        <input type="submit" class="btn btn-danger" value="Save">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         @endforeach
 
         </tbody>
     </table>
 </div>
+
+@foreach($products as $product)
+    <div id="{{'product'.$product->id}}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Thêm sản phẩm</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" method="post" action="{{route('edit-product', $product->id)}}">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên sản phẩm</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="name" value="{{$product->name}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Loại</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="id_type">
+                                    @foreach($types as $type)
+                                        @if($type->id == $product->id_type)
+                                            <option selected value="{{$type->id}}">{{$type->name}}</option>
+                                        @else
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Giá</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="price" value="{{$product->price}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" value="{{$product->description}}" name="description">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Giá sau khuyến mãi</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" value="{{$product->promotion_price}}" name="promotion_price" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Ảnh</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" value="{{$product->image}}" name="image" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <input type="submit" class="btn btn-danger" value="Save">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 
 <div id="add" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -218,16 +225,16 @@
             @endforeach
         ];
 
-        for (var i=0; i<products.length; i++){
-            var edit = '#edit' + products[i];
-            var id = '#product' + products[i];
-            $(edit).click(function(){
+        $.each(products, function (key, value) {
+            var edit = '#edit' + value;
+            var id = '#product' + value;
+            $(edit).on('click', function(){
                 $(id).modal('show');
             });
-        }
+        });
 
         $('.fixed-table-loading').remove();
-    })
+    });
 </script>
 </body>
 

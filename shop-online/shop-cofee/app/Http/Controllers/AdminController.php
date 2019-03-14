@@ -78,8 +78,6 @@ class AdminController extends Controller
         $product->promotion_price = $request->promotion_price;
         $product->description = $request->description;
         $product->image = $request->image;
-        $product->rate =  $request->rate;
-        $product->total_rate = $request->total_rate;
 
         $product->save();
         return redirect()->back()->with('edit-product-success', 'Chỉnh sửa thông tin sản phẩm thành công');
