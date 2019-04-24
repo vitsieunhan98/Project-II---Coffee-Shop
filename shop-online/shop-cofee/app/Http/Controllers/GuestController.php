@@ -38,20 +38,22 @@ class GuestController extends Controller
         $data = array('email'=>$req->email, 'password'=>$req->password);
 
         $user = User::where('email', $req->email)->first();
-        if($user->status){
-            if(Auth::attempt($data)){
-                if($this->isAdmin($data['email'])){
+        if(Auth::attempt($data)){
+            if($user->status) {
+                if ($this->isAdmin($data['email'])) {
                     return redirect()->route('xem-product');
                 }
                 return redirect()->route('trang-chu');
             }
             else{
-                return redirect()->back()->with('login-fail', 'Sai tên đăng nhập hoặc mật khẩu');
+                return redirect()->back()->with('login-fail', 'Tài khoản của bạn đã bị khóa');
             }
         }
         else{
-            return redirect()->back()->with('login-fail', 'Tài khoản của bạn đã bị khóa');
+            return redirect()->back()->with('login-fail', 'Sai tên đăng nhập hoặc mật khẩu');
         }
+
+
     }
 
     //Khi click register (SIGN UP)
