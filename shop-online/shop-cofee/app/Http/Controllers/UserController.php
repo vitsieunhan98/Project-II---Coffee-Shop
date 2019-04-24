@@ -150,25 +150,27 @@ class UserController extends Controller
 
     //COMMENT VÀO 1 SẢN PHẨM
     public function postComment($id_product, Request $request){
-        $comment = new Comment();
-        $comment->content = $request->Content;
-        $comment->id_user = Auth::id();
-        $comment->id_product = $id_product;
+        if(trim($request->Content) !== ''){
+            $comment = new Comment();
+            $comment->content = $request->Content;
+            $comment->id_user = Auth::id();
+            $comment->id_product = $id_product;
 
-        $comment->save();
-
+            $comment->save();
+        }
         return redirect()->back();
     }
 
     //REPLY MỘT COMMENT
     public function postRepComment($id_comment, Request $request){
-        $repComment = new ReplyComment();
-        $repComment->id_comment = $id_comment;
-        $repComment->id_user = Auth::id();
-        $repComment->content = $request->rep_content;
+        if(trim($request->rep_content) !== ''){
+            $repComment = new ReplyComment();
+            $repComment->id_comment = $id_comment;
+            $repComment->id_user = Auth::id();
+            $repComment->content = $request->rep_content;
 
-        $repComment->save();
-
+            $repComment->save();
+        }
         return redirect()->back();
     }
 

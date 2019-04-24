@@ -170,8 +170,8 @@
                                         <div class="media-body">
                                             {{$one->name}}
                                             @if($one->price != $one->promotion_price)
-                                                <span class="flash-del">{{$one->price}}</span>
-                                                <span class="flash-sale">{{$one->promotion_price}}</span>
+                                                <span class="flash-del">{{$one->price}} đồng</span>
+                                                <span class="flash-sale">{{$one->promotion_price}} đồng</span>
                                             @else
                                                 <span>{{number_format($one->price)}} đồng</span>
                                             @endif
