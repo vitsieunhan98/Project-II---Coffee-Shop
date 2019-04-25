@@ -70,7 +70,7 @@ class GuestController extends Controller
                 'password'=>'required|min:6',
                 're_password'=>'required|same:password',
                 'name'=>'required',
-                'phone'=>'required|alpha_num|min:10|max:10'
+                'phone'=>'required|numeric|min:10|max:10'
             ],
             [
                 'email.required'=>'Vui lòng nhập Email',
@@ -79,7 +79,7 @@ class GuestController extends Controller
                 're_password.same'=>'Mật khẩu không giống nhau',
                 'password.min'=>'Mật khẩu phải có ít nhất 6 kí tự',
                 'phone.required'=>'Bạn chưa nhập SĐT',
-                'phone.alpha_num'=>'Sai định dạng SĐT',
+                'phone.numeric'=>'Sai định dạng SĐT',
                 'phone.min'=>'SĐT phải có 10 chữ số',
                 'phone.max'=>'SĐT phải có 10 chữ số'
             ]

@@ -105,7 +105,7 @@ Route::post('edit-product/{id_product}', [
     'uses'=>'AdminController@editProduct'
 ]);
 
-Route::post('delete-product/{id_product}', [
+Route::get('delete-product/{id_product}', [
    'as'=>'delete-product',
    'uses'=>'AdminController@deleteProduct'
 ]);
@@ -130,7 +130,7 @@ Route::get('xem-don-hang-user/{id_user}', [
     'uses'=>'AdminController@getUserBill'
 ]);
 
-Route::post('nang-quyen/{id_user}', [
+Route::get('nang-quyen/{id_user}', [
     'as'=>'nang-quyen',
     'uses'=>'AdminController@upgradeRole'
 ]);

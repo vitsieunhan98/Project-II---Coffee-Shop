@@ -85,7 +85,7 @@ class AdminController extends Controller
 
     //XÓA SẢN PHẨM
     public function deleteProduct($id_product){
-        Product::find($id_product)->delete();
+        Product::where('id', $id_product)->get()->first()->delete();
 
         return redirect()->back()->with('delete-product-success', 'Xóa sản phẩm thành công');
     }
@@ -154,7 +154,7 @@ class AdminController extends Controller
 
     //Nâng quyền
     public function upgradeRole($id_user){
-        $user = User::where('Id', $id_user)->first();
+        $user = User::where('id', $id_user)->first();
         $user->id_role = 1;
         $user->save();
 

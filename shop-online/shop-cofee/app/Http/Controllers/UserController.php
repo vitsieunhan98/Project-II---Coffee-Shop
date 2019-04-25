@@ -127,15 +127,14 @@ class UserController extends Controller
             [
                 'password'=>'required|min:6',
                 'name'=>'required',
-                'phone'=>'required|alpha_num|min:10|max:10'
+                'phone'=>'required|numeric|digits_between:10,10'
             ],
             [
                 'password.required'=>'Vui lòng nhập password',
                 'password.min'=>'Password phải có ít nhất 6 ký tự',
                 'phone.required'=>'Bạn chưa nhập SĐT',
-                'phone.alpha_num'=>'Sai định dạng SĐT',
-                'phone.min'=>'SĐT phải có 10 chữ số',
-                'phone.max'=>'SĐT phải có 10 chữ số'
+                'phone.numeric'=>'Sai định dạng SĐT',
+                'phone.digits_between'=>'SĐT phải có 10 chữ số'
             ]
         );
         if($user->password != $request->password){
